@@ -11,11 +11,12 @@ I am following [neetcode](https://neetcode.io/practice).
 
 #### The problem
 
-Given an integer aray nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+Given an integer aray `nums`, return `true` if any value appears at least twice in the array, and return `false` if every element is distinct.
 
 #### Brute force
 
-- time complexity: `O(n**2)`
+- time complexity: `O(n**2)` - nested loops iterating through the array
+- space complexity: `O(1)` - constant space, no additional data structures used.
 
 ```python
 class Solution:
@@ -30,9 +31,8 @@ class Solution:
 #### Sort
 
 - at first, we will sort the array, and then check if any adjacent elements are equal, if it is equal we can return `True`
-- time complexity for sorting: `O(n*logn)`
-- time complexity for searching adjacent elements:`O(n)`
-- overall time complexity: `O(n*logn)`
+- time complexity: `O(n*logn)` - due to the sorting operation
+- space complexity: `O(1)` - constant space, no additional data structures used (assuming in-place sorting)
 
 ```python
 class Solution:
@@ -48,7 +48,8 @@ class Solution:
 
 - I create a set that keeps track of numbers that I have seen
 - I have a pointer starting at the beggining and I add the number that is not in the set yet to the set, if it is there already we can return `True`
-- time complexity: `O(n)`
+- time complexity: `O(n)` - single pass through the array
+- space complexity: `O(n)` - space required for the set to store unique elements
 
 ```python
 class Solution:
@@ -66,7 +67,8 @@ class Solution:
 - the hash map approach is similar to the hash set approach but also keeps track of the count of occurences for each element
 - it uses a hash map to store the elements as keys and their counts as values
 - if a duplicate element is encountered (count greated than or equal to 1) it returns `True`
-- time complexity: `O(n)`
+- time complexity: `O(n)` - single pass through the array
+- space complexity: `O(n)` - space required for the set to store unique elements and their counts
 
 ```python
 class Solution:
@@ -77,6 +79,66 @@ class Solution:
                 return True
             my_dict[num] = my_dict.get(num, 0) + 1
         return False
+```
 
+### 242. Valid anagram
+
+#### The problem
+
+Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+#### Sorting
+
+- the most straightforward approach is to compare if the sorted versions of both strings are equal
+- if the sorted strings are the same, it means they are anagrams
+- time complexity: `O(n*logn)` - due to the sorting operation
+- space complexity: `O(n)` - space to store the sorted versions of the strings
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return sorted(s) == sorted(t)
+```
+
+#### Counter
+
+- build a counter dictionary for string `s` by counting the occurrences of each character
+- time complexity: `O(n)` - building the counters for both strings requires iterating through each character once
+- space complexity: `O(n)` - space required for the counters
+
+```python
+from collections import Counter
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+```
+
+#### Hash map
+
+- we can use hash maps to keep track of the frequency of each character in both strings
+- if the frequencies are the same for both strings, they are anagrams
+- time complexity: `O(n)` - iterating through both strings once
+- space complexity: `O(n)` - space required for the hash map to store the frequency of characters
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        char_count = {}
+
+        for char in s:
+            char_count[char] = char_count.get(char, 0) + 1
+
+        for char in t:
+            if char not in char_count or char_count[char] == 0:
+                return False
+            char_count[char] -= 1
+
+        return True
 ```
 
