@@ -4,6 +4,8 @@ I am following [neetcode](https://neetcode.io/practice).
 
 - [Arrays and hashing](#arrays-and-hashing)
     - [217. Contains duplicate](#217-contains-duplicate) - easy
+    - [242. Valid anagram](#242-valid-anagram) - easy
+    - [1. Two sum](#1-two-sum) - easy
 
 ## Arrays and hashing
 
@@ -142,3 +144,46 @@ class Solution:
         return True
 ```
 
+### 1. Two sum
+
+#### The problem
+
+Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.
+
+#### Brute force
+
+- iterate through each element in the array
+- for each element, iterate through the rest of the array to find a pair that adds up to the target
+- if found, return the indices of the two elements
+- time complexity: `O(n**2)` - the nested loops iterate through the entire array.
+- space complexity: `O(1)` - no additional space is used.
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        for i in range(0, len(nums) - 1):
+            for j in range(1, len(nums)):
+                if target == nums[i] + nums[j]:
+                    return i, j
+```
+
+#### Hash map
+
+ - use a hash map to store the elements and their indices as we iterate through the array
+ - for each element, check if the complement (target - current element) is already in the hash map
+ - if found, return the indices
+ - time complexity: `O(n)` - we iterate through the array once
+ - space complexity: `O(n)` - we might need to store all elements in the array
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        searched = {}
+        for index, num in enumerate(nums):
+            comlement = target - num
+            if wanted in searched:
+                return index, searched[complement]
+            searched[num] = index
+```
