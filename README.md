@@ -7,10 +7,13 @@ Feel free to add any solution that has not been mentioned yet.
 ## Content
 
 - [Arrays and hashing](#arrays-and-hashing)
-    - [217. Contains duplicate](#217-contains-duplicate) - <span style="color: green;">easy</span>
-    - [242. Valid anagram](#242-valid-anagram) - <span style="color: green;">easy</span>
-    - [1. Two sum](#1-two-sum) - <span style="color: green;">easy</span>
-    - [49. Group anagrams](#49-group-anagrams) - <span style="color: orange;">medium</span>
+    - [217. Contains duplicate](#217-contains-duplicate) - easy
+    - [242. Valid anagram](#242-valid-anagram) - easy
+    - [1. Two sum](#1-two-sum) - easy
+    - [49. Group anagrams](#49-group-anagrams) - medium
+- [Two pointers](#two-pointers)
+    - [125. Valid palindrome](#125-valid-palindrome) - easy
+
 
 ## Arrays and hashing
 
@@ -38,8 +41,8 @@ class Solution:
 #### Sort
 
 - at first, we will sort the array, and then check if any adjacent elements are equal, if it is equal we can return `True`
-- **time complexity:** $O(n*logn)$ - due to the sorting operation
-- **space complexity:** `$O(1)$ - constant space, no additional data structures used (assuming in-place sorting)
+- **time complexity:** `O(n*logn)` - due to the sorting operation
+- **space complexity:** `O(1)` - constant space, no additional data structures used (assuming in-place sorting)
 
 ```python
 class Solution:
@@ -55,8 +58,8 @@ class Solution:
 
 - I create a set that keeps track of numbers that I have seen
 - I have a pointer starting at the beggining and I add the number that is not in the set yet to the set, if it is there already we can return `True`
-- **time complexity:** $O(n)$ - single pass through the array
-- **space complexity:** $O(n)$ - space required for the set to store unique elements
+- **time complexity:** `O(n)` - single pass through the array
+- **space complexity:** `O(n)` - space required for the set to store unique elements
 
 ```python
 class Solution:
@@ -74,8 +77,8 @@ class Solution:
 - the hash map approach is similar to the hash set approach but also keeps track of the count of occurences for each element
 - it uses a hash map to store the elements as keys and their counts as values
 - if a duplicate element is encountered (count greated than or equal to 1) it returns `True`
-- **time complexity:** $O(n)$ - single pass through the array
-- **space complexity:** $O(n)$ - space required for the set to store unique elements and their counts
+- **time complexity:** `O(n)` - single pass through the array
+- **space complexity:** `O(n)` - space required for the set to store unique elements and their counts
 
 ```python
 class Solution:
@@ -100,8 +103,8 @@ An Anagram is a word or phrase formed by rearranging the letters of a different 
 
 - the most straightforward approach is to compare if the sorted versions of both strings are equal
 - if the sorted strings are the same, it means they are anagrams
-- **time complexity:** $O(n*logn)$ - due to the sorting operation
-- **space complexity:** $O(n)$ - space to store the sorted versions of the strings
+- **time complexity:** `O(n*logn)` - due to the sorting operation
+- **space complexity:** `O(n)` - space to store the sorted versions of the strings
 
 ```python
 class Solution:
@@ -112,8 +115,8 @@ class Solution:
 #### Counter
 
 - build a counter dictionary for string `s` by counting the occurrences of each character
-- **time complexity:** $O(n)$ - building the counters for both strings requires iterating through each character once
-- **space complexity:** $O(n)$ - space required for the counters
+- **time complexity:** `O(n)` - building the counters for both strings requires iterating through each character once
+- **space complexity:** `O(n)` - space required for the counters
 
 ```python
 from collections import Counter
@@ -127,8 +130,8 @@ class Solution:
 
 - we can use hash maps to keep track of the frequency of each character in both strings
 - if the frequencies are the same for both strings, they are anagrams
-- **time complexity:** $O(n)$ - iterating through both strings once
-- **space complexity:** $O(n)$ - space required for the hash map to store the frequency of characters
+- **time complexity:** `O(n)` - iterating through both strings once
+- **space complexity:** `O(n)` - space required for the hash map to store the frequency of characters
 
 ```python
 class Solution:
@@ -162,8 +165,8 @@ You may assume that each input would have exactly one solution, and you may not 
 - iterate through each element in the array
 - for each element, iterate through the rest of the array to find a pair that adds up to the target
 - if found, return the indices of the two elements
-- **time complexity:** $O(n^2)$ - the nested loops iterate through the entire array
-- **space complexity:** $O(1)$ - no additional space is used
+- **time complexity:** `O(n^2)` - the nested loops iterate through the entire array
+- **space complexity:** `O(1)` - no additional space is used
 
 ```python
 class Solution:
@@ -179,8 +182,8 @@ class Solution:
  - use a hash map to store the elements and their indices as we iterate through the array
  - for each element, check if the complement (target - current element) is already in the hash map
  - if found, return the indices
- - **time complexity:** $O(n)$ - we iterate through the array once
- - **space complexity:** $O(n)$ - we might need to store all elements in the array
+ - **time complexity:** `O(n)` - we iterate through the array once
+ - **space complexity:** `O(n)` - we might need to store all elements in the array
 
 ```python
 class Solution:
@@ -208,14 +211,14 @@ Given an array of strings `strs`, group the anagrams together. You can return th
 - the `processed_words` set is used to keep track of words that have already been processed to avoid redundant comparisons
 - special cases, such as empty strings and single-character words, are considered separately and added to the final output (`anagrams`)
 - the output is a list of lists, where each inner list represents a group of anagrams
-- **time complexity:** $O(n^2)$ - the nested loops iterate through the entire array
-    - the first loop: $O(n*L)$, where $n$ is the length of `strs`, and $L$ is the maximum length of a word
-    - the second loop: $O(n^2)$
-    - handling empty strings and single-character words: $O(n)$
-- **space complexity:** $O(n*L)$ - space required for the dictionary and outputs lists
-    - `char_count_in_words`: $O(n*L)$
-    - `processed_words` set: $O(n)$
-    - `anagrams` list: $O(n*L)$
+- **time complexity:** `O(n^2)` - the nested loops iterate through the entire array
+    - the first loop: `O(n*L)`, where `n` is the length of `strs`, and `L` is the maximum length of a word
+    - the second loop: `O(n^2)`
+    - handling empty strings and single-character words: `O(n)`
+- **space complexity:** `O(n*L)` - space required for the dictionary and outputs lists
+    - `char_count_in_words`: `O(n*L)`
+    - `processed_words` set: `O(n)`
+    - `anagrams` list: `O(n*L)`
 
 ```python
 class Solution:
@@ -283,8 +286,8 @@ class Solution:
 - if `sorted_word` is already a key in the `anagram` dictionary, it appends the original word to the list associated with that key
 - if `sorted_word` is not present in the dictionary, it creates a new key-value pair where the key is `sorted_word` and the value is a list containing the current word
 - finally, return the values from the `anagram` dictionary, which represents the grouped anagrams
-- **time complexity:** $O(n*L*logL)$ - due to the sorting of characters in each word
-- **space complexity:** $O(n*L)$ - the space required for the `anagram` dictionary
+- **time complexity:** `O(n*L*logL)` - due to the sorting of characters in each word
+- **space complexity:** `O(n*L)` - the space required for the `anagram` dictionary
 
 ```python
 class Solution:
@@ -327,15 +330,15 @@ We use a `defaultdict` because it allows us to initialize a list for a key that 
     - for example, if `char` is `"a"`, it increments `count[0]`, if `char` is `"b"`, it increments `count[1]`, and so on
 - use a tuple of character counts (the `count` array) as a key to group anagrams (tuples are hashable, making them suitable for use as keys in a dictionary)
 - finally, return the values (anagram groups) of the dictionary
-- **time complexity:** $O(n*L)$ - we iterate through each string and, for each character in the string, perform constant-time operations
-    - iterating through each word: $O(n)$
-    - character counting: $O(L)$
-    - tuple of character counts as key: $O(1)$
-    - appending to `anagram`: $O(1)$
-    - returning values: $O(n)$
-- **space complexity:** $O(n*L)$ - the space required for the `anagram` dictionary
-    - `count` array: $O(1)$ since the array has a constant length
-    - `anagram` defaultdict: $O(n)$ since in the worst case, all words are unique anagrams
+- **time complexity:** `O(n*L)` - we iterate through each string and, for each character in the string, perform constant-time operations
+    - iterating through each word: `O(n)`
+    - character counting: `O(L)`
+    - tuple of character counts as key: `O(1)`
+    - appending to `anagram`: `O(1)`
+    - returning values: `O(n)`
+- **space complexity:** `O(n*L)` - the space required for the `anagram` dictionary
+    - `count` array: `O(1)` since the array has a constant length
+    - `anagram` defaultdict: `O(n)` since in the worst case, all words are unique anagrams
 
 ```python
 class Solution:
@@ -350,4 +353,90 @@ class Solution:
             anagram[tuple(count)].append(word)
         return anagram.values()
 ```
+
+## Two pointers
+
+### 125. Valid palindrome
+
+#### The problem
+
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string `s`, return `true` if it is a palindrome, or `false` otherwise.
+
+#### Brute force
+
+```python
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # Create a cleaned string with only alphanumeric characters in lowercase
+        cleaned_s = ''.join(c.lower() for c in s if c.isalnum())
+        # Check if the cleaned string is equal to its reverse
+        return cleaned_s == cleaned_s[::-1]
+```
+
+Possible solution using regular expressions:
+
+```python
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        cleaned_s = re.sub(r'[^a-zA-Z0-9]', '', s).lower()
+        return True if cleaned_s == cleaned_s[::-1] else False
+```
+
+- time complexity: `O(n)` 
+    - constructing the cleaned string takes `O(n)` time
+    - comparing the string with its reverse takes `O(n)` time
+- space complexity: `O(n)` - due to the size of the cleaned string
+
+#### Two-pointer approach
+
+- the cleaned string is constructed similarly to the first solution
+- two pointers (left and right) are used to compare characters from the beginning and end of the cleaned string
+- time complexity: `O(n)`
+    - constructing the cleaned string takes `O(n)` time.
+    - comparing characters using two pointers takes `O(n/2)` time.
+- space complexity: `O(n)` - due to the size of the cleaned string
+
+```python
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # Create a cleaned string with only alphanumeric characters in lowercase
+        cleaned_s = ''.join(c.lower() for c in s if c.isalnum())
+
+        # Use two pointers to compare characters from the beginning and end
+        left, right = 0, len(cleaned_s) - 1
+        while left < right:
+            if cleaned_s[left] != cleaned_s[right]:
+                return False
+            left += 1
+            right -= 1
+        return True
+```
+
+#### Optimized two-pointer approach
+
+- two pointers (left and right) are used to compare characters directly in the original string, skipping non-alphanumeric characters
+- time complexity: `O(n)`
+    - moving the pointers and comparing characters takes `O(n)` time
+    - skipping non-alphanumeric characters without constructing a cleaned string
+- space complexity: `O(1)` - constant space, as no additional space is used proportional to the input size
+
+```python
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # Use two pointers to compare characters, skipping non-alphanumeric characters
+        left, right = 0, len(s) - 1
+        while left < right:
+            while left < right and not s[left].isalnum():
+                left += 1
+            while left < right and not s[right].isalnum():
+                right -= 1
+            if s[left].lower() != s[right].lower():
+                return False
+            left += 1
+            right -= 1
+        return True
+```
+
 
