@@ -1,6 +1,6 @@
 # Leetcode solutions
 
-I am following [neetcode](https://neetcode.io/practice).
+I am following [NeetCode](https://neetcode.io/practice) list of 150 leetcode problems.
 
 Feel free to add any solution that has not been mentioned yet.
 
@@ -23,6 +23,11 @@ Feel free to add any solution that has not been mentioned yet.
 #### The problem
 
 Given an integer aray `nums`, return `true` if any value appears at least twice in the array, and return `false` if every element is distinct.
+
+```
+Input: nums = [1,2,3,1]
+Output: true
+```
 
 #### Brute force
 
@@ -100,6 +105,11 @@ Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `f
 
 An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 
+```
+Input: s = "anagram", t = "nagaram"
+Output: true
+```
+
 #### Sorting
 
 - the most straightforward approach is to compare if the sorted versions of both strings are equal
@@ -161,6 +171,12 @@ Given an array of integers `nums` and an integer `target`, return indices of the
 
 You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.
 
+```
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+```
+
 #### Brute force
 
 - iterate through each element in the array
@@ -202,6 +218,11 @@ class Solution:
 #### The problem
 
 Given an array of strings `strs`, group the anagrams together. You can return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+```
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+```
 
 #### Brute force
 
@@ -365,6 +386,12 @@ A phrase is a palindrome if, after converting all uppercase letters into lowerca
 
 Given a string `s`, return `true` if it is a palindrome, or `false` otherwise.
 
+```
+Input: s = "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama" is a palindrome.
+```
+
 #### Brute force
 
 ```python
@@ -451,6 +478,12 @@ Return the indices of the two numbers, `index1` and `index2`, added by one as an
 The tests are generated such that there is exactly one solution. You may not use the same element twice.
 
 Your solution must use only constant extra space.
+
+```
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].
+```
 
 #### Brute force
 
