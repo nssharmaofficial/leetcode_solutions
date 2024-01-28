@@ -13,6 +13,7 @@ Feel free to add any solution that has not been mentioned yet.
     - [49. Group anagrams](#49-group-anagrams) - medium
 - [Two pointers](#two-pointers)
     - [125. Valid palindrome](#125-valid-palindrome) - easy
+    - [167. Two sum II - input array is sorted](#167-two-sum-ii---input-array-is-sorted) - medium
 
 
 ## Arrays and hashing
@@ -439,4 +440,73 @@ class Solution:
         return True
 ```
 
+### 167. Two sum II - input array is sorted
+
+#### Problem
+
+Given a 1-indexed array of integers `numbers` that is already sorted in non-decreasing order, find two numbers such that they add up to a specific `target` number. Let these two numbers be `numbers[index1]` and `numbers[index2]` where 1 <= `index1` < `index2` <= `numbers.length`.
+
+Return the indices of the two numbers, `index1` and `index2`, added by one as an integer array `[index1, index2]` of length 2.
+
+The tests are generated such that there is exactly one solution. You may not use the same element twice.
+
+Your solution must use only constant extra space.
+
+#### Brute force
+
+Similarly, as in [1. Two sum](#1-two-sum):
+- time complexity: `O(n^2)` - nested loop through the array
+- space complexity: `O(1)` - no additional space is used
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        for i in range(0, len(nums) - 1):
+            for j in range(1, len(nums)):
+                if target == nums[i] + nums[j]:
+                    return [i+1, j+1]
+```
+
+#### Binary search
+
+- one-pointer loop to iterate through the array
+- within the loop do a binary search to find a pair of numbers
+- if the sum of the current number and the middle one is greater than the `target`, decrement `mid` index
+- if the sum is less than the `target`, increment `mid` index.
+- if the sum is equal to the `target`, return the indices `[curr_num_index + 1, mid + 1]`, as the indices are 1-based
+- time complexity: `O(n*logn)` - we iterate through the array once and we perform a binary search
+- space complexity: `O(1)` - no additional space is used
+
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        for curr_num_index, num in enumerate(numbers):
+            left, right = curr_num_index + 1, len(numbers) - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if (numbers[mid] + num) == target: return curr_num_index + 1, mid + 1
+                if (numbers[mid] + num) > target: right = mid - 1
+                else: left = mid + 1
+```
+
+#### Two-pointer approach
+
+- initialize two pointers, `left` and `right`, pointing to the start and end of the array, respectively
+- use a while loop to iterate until `left` is less than `right`
+- calculate the sum of the numbers at their positions
+- if the sum is greater than the `target`, decrement `right`
+- if the sum is less than the `target`, increment `left`
+- if the sum is equal to the `target`, return the indices `[left+1, right+1]`, as the indices are 1-based
+- time complexity: `O(n)` - we iterate through the array once
+- space complexity: `O(1)` - no additional space is used
+
+```python
+class Solution:
+    def twoSum(self, nums, target):
+        left, right = 0, len(nums) - 1
+        while left < right:
+            if nums[left] + nums[right] == target: return (left + 1,  right + 1)
+            if nums[left] + nums[right] > target: right -= 1
+            else: left += 1
+```
 
