@@ -4,6 +4,8 @@ I am following [NeetCode](https://neetcode.io/practice) list of 150 leetcode pro
 
 Feel free to add any solution that has not been mentioned yet.
 
+TODO: add links to the questions 
+
 ## Content
 
 - [Arrays and hashing](#arrays-and-hashing)
@@ -11,6 +13,7 @@ Feel free to add any solution that has not been mentioned yet.
     - [242. Valid anagram](#242-valid-anagram) - easy
     - [1. Two sum](#1-two-sum) - easy
     - [49. Group anagrams](#49-group-anagrams) - medium
+    - [347. Top k frequent elements](#347-top-k-frequent-elements) - medium
 - [Two pointers](#two-pointers)
     - [125. Valid palindrome](#125-valid-palindrome) - easy
     - [167. Two sum II - input array is sorted](#167-two-sum-ii---input-array-is-sorted) - medium
@@ -197,7 +200,7 @@ class Solution:
 #### Hash map
 
  - use a hash map to store the elements and their indices as we iterate through the array
- - for each element, check if the complement (target - current element) is already in the hash map
+ - for each element, check if the `complement` is already in the hash map
  - if found, return the indices
  - **time complexity:** `O(n)` - we iterate through the array once
  - **space complexity:** `O(n)` - we might need to store all elements in the array
@@ -207,8 +210,8 @@ class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         searched = {}
         for index, num in enumerate(nums):
-            comlement = target - num
-            if wanted in searched:
+            complement = target - num
+            if complement in searched:
                 return index, searched[complement]
             searched[num] = index
 ```
@@ -234,13 +237,7 @@ Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
 - special cases, such as empty strings and single-character words, are considered separately and added to the final output (`anagrams`)
 - the output is a list of lists, where each inner list represents a group of anagrams
 - **time complexity:** `O(n^2)` - the nested loops iterate through the entire array
-    - the first loop: `O(n*L)`, where `n` is the length of `strs`, and `L` is the maximum length of a word
-    - the second loop: `O(n^2)`
-    - handling empty strings and single-character words: `O(n)`
 - **space complexity:** `O(n*L)` - space required for the dictionary and outputs lists
-    - `char_count_in_words`: `O(n*L)`
-    - `processed_words` set: `O(n)`
-    - `anagrams` list: `O(n*L)`
 
 ```python
 class Solution:
@@ -309,7 +306,7 @@ class Solution:
 - if `sorted_word` is not present in the dictionary, it creates a new key-value pair where the key is `sorted_word` and the value is a list containing the current word
 - finally, return the values from the `anagram` dictionary, which represents the grouped anagrams
 - **time complexity:** `O(n*L*logL)` - due to the sorting of characters in each word
-- **space complexity:** `O(n*L)` - the space required for the `anagram` dictionary
+- **space complexity:** `O(n*L)` - the space required for the dictionary
 
 ```python
 class Solution:
@@ -338,7 +335,7 @@ class Solution:
 
 We use a `defaultdict` because it allows us to initialize a list for a key that doesn't exist yet. In this case, each key in the `defaultdict` represents a unique sorted representation of characters (anagram group). If we used a regular dictionary and tried to append words to a non-existing key, it would raise a `KeyError`. The defaultdict simplifies the process of creating and updating lists associated with each sorted form.
 
-#### Counter
+#### Hash map - optimized
 
 - use a dictionary to store lists of anagrams based on their character count representation
 - calculate the count of each character in the string
@@ -353,14 +350,7 @@ We use a `defaultdict` because it allows us to initialize a list for a key that 
 - use a tuple of character counts (the `count` array) as a key to group anagrams (tuples are hashable, making them suitable for use as keys in a dictionary)
 - finally, return the values (anagram groups) of the dictionary
 - **time complexity:** `O(n*L)` - we iterate through each string and, for each character in the string, perform constant-time operations
-    - iterating through each word: `O(n)`
-    - character counting: `O(L)`
-    - tuple of character counts as key: `O(1)`
-    - appending to `anagram`: `O(1)`
-    - returning values: `O(n)`
-- **space complexity:** `O(n*L)` - the space required for the `anagram` dictionary
-    - `count` array: `O(1)` since the array has a constant length
-    - `anagram` defaultdict: `O(n)` since in the worst case, all words are unique anagrams
+- **space complexity:** `O(n*L)` - the space required for the dictionary
 
 ```python
 class Solution:
@@ -374,6 +364,76 @@ class Solution:
                 count[ord(char) - ord("a")] += 1
             anagram[tuple(count)].append(word)
         return anagram.values()
+```
+
+### 347. Top k frequent elements
+
+#### The problem
+
+Given an integer array `nums` and an integer `k`, return the k most frequent elements. You may return the answer in any order.
+
+```
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+```
+
+#### Hash map
+
+- use a dictionary `freq_counter` to count the frequency of each element in the input list `nums`
+- sort the dictionary items based on frequency in descending order
+- extract the top k frequent elements and add them to the `output` set 
+- **time complexity:** `O(n*logn)` - due to the sorting step
+- **space complexity:** `O(n)` - to store the (sorted) frequencies
+
+``` python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freq_counter = defaultdict()
+        output = set()
+
+        for num in nums:
+            freq_counter[num] = freq_counter.get(num, 0) + 1
+        sorted_freq_counter = sorted(freq_counter.items(), key=lambda item: item[1], reverse=True)
+
+        for i in range(k):
+            output.add(sorted_freq_counter[i][0])
+
+        return output
+```
+
+#### Bucket sort approach
+
+- create a dictionary (freq_counter) to store the frequency of each element in the array
+- create buckets to store elements based on their frequency
+- iterate through freq_counter's items and distribute elements into the buckets based on their frequencies. Each element goes into the bucket corresponding to its frequency
+- starting from the highest frequency bucket, iterate through the buckets in descending order. For each bucket, append its elements to the answer list until we collect the top k frequent elements.
+- time complexity: `O(n)`
+    - creating dictionary: `O(n)`
+    - distributing elements into buckets: `O(n)`
+    - building the output list: `O(k)`
+- space complexity: `O(n)`
+    - dictionary mp: `O(n)`
+    - buckets: `O(n)`
+    - output list: `O(k)`
+
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freq_counter = defaultdict()
+        buckets = [[] for i in range(len(nums) + 1)]
+        output = []
+
+        for num in nums:
+            freq_counter[num] = freq_counter.get(num, 0) + 1
+
+        for num, count in freq_counter.items():
+            buckets[num].append(count)
+
+        for i in range(len(buckets) - 1, 0, -1):
+            for count in buckets[i]:
+                ans.append(n)
+                if len(ans) == k:
+                    return ans
 ```
 
 ## Two pointers
@@ -421,9 +481,7 @@ class Solution:
 
 - the cleaned string is constructed similarly to the first solution
 - two pointers (left and right) are used to compare characters from the beginning and end of the cleaned string
-- time complexity: `O(n)`
-    - constructing the cleaned string takes `O(n)` time.
-    - comparing characters using two pointers takes `O(n/2)` time.
+- time complexity: `O(n)` - iterating through the array once
 - space complexity: `O(n)` - due to the size of the cleaned string
 
 ```python
@@ -445,9 +503,7 @@ class Solution:
 #### Optimized two-pointer approach
 
 - two pointers (left and right) are used to compare characters directly in the original string, skipping non-alphanumeric characters
-- time complexity: `O(n)`
-    - moving the pointers and comparing characters takes `O(n)` time
-    - skipping non-alphanumeric characters without constructing a cleaned string
+- time complexity: `O(n)` - iterating through the array once
 - space complexity: `O(1)` - constant space, as no additional space is used proportional to the input size
 
 ```python
@@ -469,7 +525,7 @@ class Solution:
 
 ### 167. Two sum II - input array is sorted
 
-#### Problem
+#### The problem
 
 Given a 1-indexed array of integers `numbers` that is already sorted in non-decreasing order, find two numbers such that they add up to a specific `target` number. Let these two numbers be `numbers[index1]` and `numbers[index2]` where 1 <= `index1` < `index2` <= `numbers.length`.
 
